@@ -8,4 +8,6 @@ public interface LivingCreature {
     public void attack(LivingCreature target);
     public void takeDamage(int damage);
     public boolean isAlive();
+    public String getName();
+    public int getHealth();
 }

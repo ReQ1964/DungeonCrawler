@@ -2,23 +2,46 @@ package game;
 
 import entities.Player;
 
-public class GameLoop {
+import java.util.Scanner;
+
+public class GameLoop implements Runnable {
     private boolean running = true;
+    private Player player;
 
+    public GameLoop(Player player) {
+        this.player = player;
+    }
 
-    public void start(Player player){
+    @Override
+    public void run() {
         System.out.println("Welcome to the GAME!");
-        while(running){
-            checkGameOver(player);
+        while (running) {
+            checkGameOver();
+            move();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.out.println("Game loop interrupted.");
+            }
         }
     }
 
-    private void checkGameOver(Player player){
+    private void checkGameOver() {
         running = player.isAlive();
 
-        if(!running){
+        if (!running) {
             System.out.println("Game Over!");
             System.exit(0);
+        }
+    }
+
+    public void move() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("Enter a direction (east/west) to move: ");
+            String input = scanner.nextLine();
+            player.move(input);
         }
     }
 }

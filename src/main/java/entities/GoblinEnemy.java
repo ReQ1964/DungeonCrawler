@@ -28,10 +28,12 @@ public class GoblinEnemy implements LivingCreature {
         return health > 0;
     }
 
+    @Override
     public String getName(){
-        return "A goblin called" + name;
+        return "A goblin called " + name;
     }
 
+    @Override
     public int getHealth(){
         return health;
     }
