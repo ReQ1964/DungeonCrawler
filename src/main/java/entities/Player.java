@@ -21,6 +21,11 @@ public class Player implements LivingCreature {
         health -= damage;
     }
 
+    @Override
+    public boolean isAlive(){
+        return health > 0;
+    }
+
     public String getName(){
         return name;
     }

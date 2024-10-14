@@ -6,7 +6,7 @@ public class GoblinEnemy implements LivingCreature {
     private int health;
     private int attackDamage;
 
-    public GoblinEnemy(int health, int attackDamage) {
+    public GoblinEnemy(String name, int health, int attackDamage) {
         Faker faker = new Faker();
         this.name = faker.name().fullName();
         this.health = health;
@@ -21,6 +21,11 @@ public class GoblinEnemy implements LivingCreature {
     @Override
     public void takeDamage(int damage){
         health -= damage;
+    }
+
+    @Override
+    public boolean isAlive(){
+        return health > 0;
     }
 
     public String getName(){

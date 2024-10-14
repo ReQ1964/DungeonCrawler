@@ -7,4 +7,5 @@ public interface LivingCreature {
 
     public void attack(LivingCreature target);
     public void takeDamage(int damage);
+    public boolean isAlive();
 }
