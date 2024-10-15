@@ -1,7 +1,6 @@
 package game;
 
 import entities.Player;
-
 import java.util.Scanner;
 
 public class GameLoop implements Runnable {
@@ -25,7 +24,6 @@ public class GameLoop implements Runnable {
                 Thread.currentThread().interrupt();
                 System.out.println("Game loop interrupted.");
                 throw new RuntimeException(e);
-
             }
         }
     }
@@ -41,8 +39,8 @@ public class GameLoop implements Runnable {
 
     public void move() throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter a direction (east/west) to move: ");
-            String input = scanner.nextLine();
-            player.move(input);
+        System.out.print("Enter a direction (east/west) to move: ");
+        String input = scanner.nextLine();
+        player.move(input);
     }
 }

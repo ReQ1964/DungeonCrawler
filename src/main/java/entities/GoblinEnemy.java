@@ -1,4 +1,5 @@
 package entities;
+
 import com.github.javafaker.Faker;
 
 public class GoblinEnemy implements LivingCreature {
@@ -14,27 +15,27 @@ public class GoblinEnemy implements LivingCreature {
     }
 
     @Override
+    public String getName() {
+        return "A goblin called " + name;
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
+    }
+
+    @Override
     public void attack(LivingCreature target) {
         target.takeDamage(this.attackDamage);
     }
 
     @Override
-    public void takeDamage(int damage){
+    public void takeDamage(int damage) {
         health -= damage;
     }
 
     @Override
-    public boolean isAlive(){
+    public boolean isAlive() {
         return health > 0;
-    }
-
-    @Override
-    public String getName(){
-        return "A goblin called " + name;
-    }
-
-    @Override
-    public int getHealth(){
-        return health;
     }
 }

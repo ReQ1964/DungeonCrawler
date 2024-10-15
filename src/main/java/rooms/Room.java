@@ -10,7 +10,7 @@ public class Room {
     private String name;
     private String description;
     private List<LivingCreature> enemies;
-    private Map<String, Room> exits; // To hold neighboring rooms
+    private Map<String, Room> exits;
 
     public Room(String name, String description, List<LivingCreature> enemies) {
         this.name = name;

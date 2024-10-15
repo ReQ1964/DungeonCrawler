@@ -1,13 +1,13 @@
 package entities;
 
 public interface LivingCreature {
-    public String name = "";
-    public int health = 0;
-    public int attackDamage = 0;
+    String name = "";
+    int health = 0;
+    int attackDamage = 0;
 
-    public void attack(LivingCreature target);
-    public void takeDamage(int damage);
-    public boolean isAlive();
-    public String getName();
-    public int getHealth();
+    String getName();
+    int getHealth();
+    boolean isAlive();
+    void attack(LivingCreature target);
+    void takeDamage(int damage);
 }
