@@ -1,5 +1,6 @@
 package entities;
 
+import game.Battle;
 import rooms.CombatRoom;
 import rooms.Room;
 
@@ -49,15 +50,20 @@ public class Player implements LivingCreature {
         return currentRoom;
     }
 
-    public void move(String direction) {
+    public void move(String direction) throws InterruptedException {
         Room newRoom = currentRoom.getExit(direction);
         if (newRoom != null) {
             currentRoom = newRoom;
             System.out.println("You moved to: " + currentRoom.getName());
             System.out.println("Description: " + currentRoom.getDescription());
 
-            if (currentRoom instanceof CombatRoom) {
-                ((CombatRoom) currentRoom).startBattle();
+            if (newRoom instanceof CombatRoom) {
+                CombatRoom combatRoom = (CombatRoom) newRoom;
+                if (!combatRoom.getEnemies().isEmpty()) {
+                    System.out.println("You have encountered enemies! A battle begins.");
+                    new Battle().startBattle(this, combatRoom.getEnemy());
+                    combatRoom.removeEnemy(combatRoom.getEnemy());
+                }
             }
         } else {
             System.out.println("You can't go that way!");

@@ -1,9 +1,12 @@
 package rooms;
 
 import entities.LivingCreature;
+import entities.Player;
+import game.Battle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class CombatRoom extends Room{
     private String name;
@@ -15,7 +18,15 @@ public class CombatRoom extends Room{
         this.enemies = (ArrayList<LivingCreature>) enemies;
     }
 
-    public void startBattle() {
+    public LivingCreature getEnemy() {
+        return enemies.get(0);
+    }
 
+    public void addEnemy(LivingCreature enemy) {
+        enemies.add(enemy);
+    }
+
+    public void removeEnemy(LivingCreature enemy) {
+        enemies.remove(enemy);
     }
 }
