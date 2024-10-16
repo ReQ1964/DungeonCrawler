@@ -4,6 +4,7 @@ public interface Item {
     String name = "";
     String description = "";
 
+    String getName();
     void use();
-    void examine();
+    String examine();
 }

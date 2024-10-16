@@ -1,13 +1,11 @@
 package entities;
 
-import game.Battle;
+import actions.room.RoomAction;
 import game.Inventory;
-import rooms.CombatRoom;
 import rooms.Room;
+import actions.room.RoomActionFactory;
 
-import java.util.HashMap;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Player implements LivingCreature {
     private static Player instance; // Singleton instance
@@ -18,6 +16,7 @@ public class Player implements LivingCreature {
     private final double critChance = 0.5;
     public boolean isDmgCritical;
     private Room currentRoom;
+    private Room previousRoom;
 
     private Player(String name, int health, int attackDamage) {
         this.name = name;
@@ -34,7 +33,7 @@ public class Player implements LivingCreature {
     }
 
     public int getAttackDamage() {
-        return attackDamage; // Return the base attack damage
+        return attackDamage;
     }
 
     @Override
@@ -54,7 +53,7 @@ public class Player implements LivingCreature {
         int damage = attackDamage;
 
         if (isDmgCritical) {
-            damage = (int) (damage * 1.5); // Calculate critical damage
+            damage = (int) (damage * 1.5);
         }
 
         target.takeDamage(damage);
@@ -71,44 +70,29 @@ public class Player implements LivingCreature {
     }
 
     public void setCurrentRoom(Room room) {
+        previousRoom = currentRoom;
         this.currentRoom = room;
-
-        System.out.println("You are in: " + currentRoom.getName());
-        System.out.println("Description: " + currentRoom.getDescription());
+        RoomAction action = RoomActionFactory.getAction(room);
+        try {
+            action.perform(this, room);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public Room getCurrentRoom() {
         return currentRoom;
     }
 
+    public Room getPreviousRoom() {
+        return previousRoom;
+    }
+
     public void move(String direction) throws InterruptedException {
         Room newRoom = currentRoom.getExit(direction);
-        Room prevRoom = currentRoom;
+
         if (newRoom != null) {
             setCurrentRoom(newRoom);
-
-            if (currentRoom instanceof CombatRoom) {
-                if (!((CombatRoom) currentRoom).getEnemies().isEmpty()) {
-                    Scanner scanner = new Scanner(System.in);
-                    boolean validInput = false;
-
-                    while (!validInput) {
-                        System.out.println("You have encountered enemies! Do you want to fight them? (yes/no)");
-                        String input = scanner.nextLine();
-
-                        if (input.equalsIgnoreCase("yes")) {
-                            new Battle().startBattle(this, (CombatRoom) currentRoom);
-                            validInput = true;
-                        } else if (input.equalsIgnoreCase("no")) {
-                            setCurrentRoom(prevRoom);
-                            System.out.println("You have fled!");
-                            validInput = true;
-                        } else {
-                            System.out.println("Invalid input! Please type 'yes' or 'no'.");
-                        }
-                    }
-                }
-            }
         } else {
             System.out.println("You can't go that way!");
         }

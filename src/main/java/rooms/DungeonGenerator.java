@@ -3,6 +3,8 @@ package rooms;
 import entities.GoblinEnemy;
 import entities.LivingCreature;
 import entities.Player;
+import items.Item;
+import items.ItemFactory;
 
 import java.util.*;
 
@@ -17,7 +19,7 @@ public class DungeonGenerator {
         int combatRoomCount = 0;
         int treasureRoomCount = 0;
         int desiredCombatRooms = (int) (totalRooms * 0.20);
-        int desiredTreasureRooms = (int) (totalRooms * 0.10);
+        int desiredTreasureRooms = (int) (totalRooms * 0.50);
 
 
         // Step 1: Generate Rooms
@@ -30,12 +32,11 @@ public class DungeonGenerator {
                 if (combatRoomCount < desiredCombatRooms && rand.nextDouble() < (double) (desiredCombatRooms - combatRoomCount) / (totalRooms - (x * height + y))) {
                     room = createCombatRoom(name, description, rand);
                     combatRoomCount++;
-                } /*else if (treasureRoomCount < desiredTreasureRooms && rand.nextDouble() < (double) (desiredTreasureRooms - treasureRoomCount) / (totalRooms - (x * height + y))) {
+                } else if (treasureRoomCount < desiredTreasureRooms && rand.nextDouble() < (double) (desiredTreasureRooms - treasureRoomCount) / (totalRooms - (x * height + y))) {
                     room = createTreasureRoom(name, description, rand);
                     treasureRoomCount++;
-                }*/ else {
-                    List<LivingCreature> enemies = generateRandomEnemies(rand);
-                    room = new Room(name, description, enemies);
+                } else {
+                    room = new Room(name, description);
                 }
 
                 grid[x][y] = room;
@@ -84,8 +85,15 @@ public class DungeonGenerator {
 
     private static CombatRoom createCombatRoom(String name, String description, Random rand) {
         List<LivingCreature> enemies = generateRandomEnemies(rand);
-        enemies.add(new GoblinEnemy(40 + rand.nextInt(21), 3 + rand.nextInt(3))); // Add a stronger enemy for combat rooms
+        enemies.add(new GoblinEnemy(40 + rand.nextInt(21), 3 + rand.nextInt(3)));
         return new CombatRoom(name, description, enemies);
+    }
+
+    private static TreasureRoom createTreasureRoom(String name, String description, Random rand) {
+        List<LivingCreature> enemies = generateRandomEnemies(rand);
+        enemies.add(new GoblinEnemy(40 + rand.nextInt(21), 3 + rand.nextInt(3)));
+        Item treasure = ItemFactory.createRandomItem();
+        return new TreasureRoom(name, description, treasure);
     }
 
     // Generate random enemies for the rooms

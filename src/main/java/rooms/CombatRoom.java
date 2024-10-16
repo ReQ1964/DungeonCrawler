@@ -2,13 +2,15 @@ package rooms;
 
 import entities.LivingCreature;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CombatRoom extends Room{
+    private ArrayList<LivingCreature> enemies;
 
     public CombatRoom(String name, String description, List<LivingCreature> enemies) {
-        super(name, description, enemies);
+        super(name, description);
         this.enemies = new ArrayList<>(enemies);
     }
 

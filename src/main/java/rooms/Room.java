@@ -9,13 +9,11 @@ import java.util.Map;
 public class Room {
     private String name;
     private String description;
-    List<LivingCreature> enemies;
     private Map<String, Room> exits;
 
-    public Room(String name, String description, List<LivingCreature> enemies) {
+    public Room(String name, String description) {
         this.name = name;
         this.description = description;
-        this.enemies = enemies;
         this.exits = new HashMap<>();
     }
 
