@@ -8,29 +8,29 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Player implements LivingCreature {
-    private final String name; // Player's name
-    private int health;        // Player's health
-    private int attackDamage;  // Player's attack damage
+    private static Player instance; // Singleton instance
+    private final String name;
+    private int health;
+    private int attackDamage;
     private final double critChance = 0.5;
     public static boolean isDmgCritical;
-    private Room currentRoom;  // The room the player is currently in
+    private Room currentRoom;
 
-    public Player(String name, int health, int attackDamage) {
+    private Player(String name, int health, int attackDamage) {
         this.name = name;
         this.health = health;
         this.attackDamage = attackDamage;
     }
 
-    public int getAttackDamage() {
-        Random rand = new Random();
-        isDmgCritical = rand.nextDouble() <= critChance;
-        int damage = attackDamage;
-
-        if (isDmgCritical) {
-            damage = (int) (damage * 1.5); // Calculate critical damage
+    public static Player getInstance(String name, int health, int attackDamage) {
+        if (instance == null) {
+            instance = new Player(name, health, attackDamage);
         }
+        return instance;
+    }
 
-        return damage;
+    public int getAttackDamage() {
+        return attackDamage; // Return the base attack damage
     }
 
     @Override
@@ -45,7 +45,15 @@ public class Player implements LivingCreature {
 
     @Override
     public void attack(LivingCreature target) {
-        target.takeDamage(this.attackDamage);
+        Random rand = new Random();
+        isDmgCritical = rand.nextDouble() <= critChance;
+        int damage = attackDamage;
+
+        if (isDmgCritical) {
+            damage = (int) (damage * 1.5); // Calculate critical damage
+        }
+
+        target.takeDamage(damage);
     }
 
     @Override
@@ -75,7 +83,7 @@ public class Player implements LivingCreature {
         if (newRoom != null) {
             setCurrentRoom(newRoom);
 
-            if(currentRoom instanceof CombatRoom) {
+            if (currentRoom instanceof CombatRoom) {
                 if (!((CombatRoom) currentRoom).getEnemies().isEmpty()) {
                     Scanner scanner = new Scanner(System.in);
                     boolean validInput = false;
@@ -85,7 +93,7 @@ public class Player implements LivingCreature {
                         String input = scanner.nextLine();
 
                         if (input.equalsIgnoreCase("yes")) {
-                            new Battle().startBattle(this,(CombatRoom) currentRoom);
+                            new Battle().startBattle(this, (CombatRoom) currentRoom);
                             validInput = true;
                         } else if (input.equalsIgnoreCase("no")) {
                             setCurrentRoom(prevRoom);
@@ -102,10 +110,10 @@ public class Player implements LivingCreature {
         }
     }
 
-    public void printAllExits(Room currentRoom){
+    public void printAllExits(Room currentRoom) {
         System.out.print("You can still go in these directions: ");
         for (var entry : currentRoom.getAllExits().entrySet()) {
-            System.out.print(entry.getKey()+ ", ");
+            System.out.print(entry.getKey() + ", ");
         }
         System.out.println();
     }

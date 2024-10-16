@@ -6,16 +6,15 @@ import rooms.CombatRoom;
 
 public class Battle {
     public void startBattle(Player player, CombatRoom combatRoom) throws InterruptedException {
-        LivingCreature enemy = combatRoom.getEnemies().get(0);
+        LivingCreature enemy = combatRoom.getEnemies().getFirst();
 
         System.out.println("A battle begins between " + player.getName() + " and the " + enemy.getName() + "!");
 
         while (player.isAlive() && enemy.isAlive()) {
-            int damageDealt = player.getAttackDamage(); // Get the damage dealt by player
+            player.attack(enemy);
             String damageIndicatorMessage = player.isDmgCritical ? " CRITICAL DAMAGE!" : " DAMAGE!";
 
-            player.attack(enemy);
-            System.out.println(player.getName() + BattleMessages.getRandomAttackMessage() + enemy.getName() + " for " + damageDealt + damageIndicatorMessage);
+            System.out.println(player.getName() + BattleMessages.getRandomAttackMessage() + enemy.getName() + " for " + player.getAttackDamage() + damageIndicatorMessage);
             System.out.println(enemy.getName() + BattleMessages.getRandomReceiveDamageMessage() + enemy.getHealth() + " health.");
             System.out.println();
             waitForNextTurn();

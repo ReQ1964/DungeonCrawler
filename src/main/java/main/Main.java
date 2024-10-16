@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        Player player = new Player("Joe", 100, 10);
+        Player player = Player.getInstance("Joe", 100, 10);
 
         DungeonGenerator.generateDungeon(3, 3 , player);
 
