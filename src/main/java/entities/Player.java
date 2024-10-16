@@ -2,6 +2,7 @@ package entities;
 
 import actions.room.RoomAction;
 import game.Inventory;
+import rooms.DungeonGenerator;
 import rooms.Room;
 import actions.room.RoomActionFactory;
 
@@ -72,6 +73,7 @@ public class Player implements LivingCreature {
     public void setCurrentRoom(Room room) {
         previousRoom = currentRoom;
         this.currentRoom = room;
+        DungeonGenerator.printDungeonMap(this);
         RoomAction action = RoomActionFactory.getAction(room);
         try {
             action.perform(this, room);
@@ -96,13 +98,5 @@ public class Player implements LivingCreature {
         } else {
             System.out.println("You can't go that way!");
         }
-    }
-
-    public void printAllExits(Room currentRoom) {
-        System.out.print("You can still go in these directions: ");
-        for (var entry : currentRoom.getAllExits().entrySet()) {
-            System.out.print(entry.getKey() + ", ");
-        }
-        System.out.println();
     }
 }

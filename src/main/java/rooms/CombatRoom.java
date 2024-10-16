@@ -9,8 +9,8 @@ import java.util.List;
 public class CombatRoom extends Room{
     private ArrayList<LivingCreature> enemies;
 
-    public CombatRoom(String name, String description, List<LivingCreature> enemies) {
-        super(name, description);
+    public CombatRoom(String name, String description, List<LivingCreature> enemies, int x, int y) {
+        super(name, description, x, y);
         this.enemies = new ArrayList<>(enemies);
     }
 
