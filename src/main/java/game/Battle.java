@@ -2,33 +2,42 @@ package game;
 
 import entities.LivingCreature;
 import entities.Player;
-import rooms.Room;
+import rooms.CombatRoom;
 
 public class Battle {
-    public void startBattle(Player player, Room room) throws InterruptedException {
-        LivingCreature enemy = room.getEnemies().get(0);
+    public void startBattle(Player player, CombatRoom combatRoom) throws InterruptedException {
+        LivingCreature enemy = combatRoom.getEnemies().get(0);
+
+        System.out.println("A battle begins between " + player.getName() + " and the " + enemy.getName() + "!");
 
         while (player.isAlive() && enemy.isAlive()) {
             player.attack(enemy);
-            System.out.println(player.getName() + " attacked " + enemy.getName() + " leaving them with " + enemy.getHealth() + " health");
+            System.out.println(player.getName() + BattleMessages.getRandomAttackMessage() + enemy.getName() + " for " + player.getAttackDamage() + " DAMAGE!");
+            System.out.println(enemy.getName() + BattleMessages.getRandomReceiveDamageMessage() + enemy.getHealth() + " health.");
+            System.out.println();
             waitForNextTurn();
 
             if (enemy.isAlive()) {
                 enemy.attack(player);
-                System.out.println(enemy.getName() + " attacked " + player.getName() + " leaving them with " + player.getHealth() + " health");
+                System.out.println(enemy.getName() + BattleMessages.getRandomAttackMessage() + player.getName() + " for " + enemy.getAttackDamage() + " DAMAGE!");
+                System.out.println(player.getName() + BattleMessages.getRandomReceiveDamageMessage() + player.getHealth() + " health.");
+                System.out.println();
                 waitForNextTurn();
             }
         }
 
+        // Determine the winner
         if (!enemy.isAlive()) {
-            System.out.println(player.getName() + " is the winner!");
-            room.removeEnemy(enemy);
+            System.out.println(player.getName() + " stands victorious, raising their weapon in triumph!");
+            System.out.println("The defeated " + enemy.getName() + " crumples to the ground, never to rise again.");
+            combatRoom.removeEnemy(enemy);
         } else {
-            System.out.println(enemy.getName() + " is the winner!");
+            System.out.println(enemy.getName() + " lets out a triumphant roar, having bested " + player.getName() + " in combat!");
+            System.out.println(player.getName() + " falls, but their spirit will live on in the hearts of their allies.");
         }
     }
 
-    private static void waitForNextTurn() throws InterruptedException {
-        Thread.sleep(100);
+    private void waitForNextTurn() throws InterruptedException {
+        Thread.sleep(800); // Waits for 1 second
     }
 }

@@ -10,4 +10,5 @@ public interface LivingCreature {
     boolean isAlive();
     void attack(LivingCreature target);
     void takeDamage(int damage);
+    int getAttackDamage();
 }

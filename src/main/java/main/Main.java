@@ -3,7 +3,7 @@ package main;
 import entities.*;
 import game.*;
 import rooms.Room;
-import rooms.RoomFactory;
+import rooms.DungeonGenerator;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         Player player = new Player("Joe", 100, 10);
 
-        Map<String, Room> rooms = RoomFactory.createRandomRooms(1, 2 , player);
+        DungeonGenerator.generateDungeon(3, 3 , player);
 
 
         Thread gameLoopThread = new Thread(new GameLoop(player));

@@ -1,6 +1,7 @@
 package entities;
 
 import game.Battle;
+import rooms.CombatRoom;
 import rooms.Room;
 
 import java.util.Scanner;
@@ -15,6 +16,11 @@ public class Player implements LivingCreature {
         this.name = name;
         this.health = health;
         this.attackDamage = attackDamage;
+    }
+
+    @Override
+    public int getAttackDamage() {
+        return attackDamage;
     }
 
     @Override
@@ -59,7 +65,8 @@ public class Player implements LivingCreature {
         if (newRoom != null) {
             setCurrentRoom(newRoom);
 
-                if (!currentRoom.getEnemies().isEmpty()) {
+            if(currentRoom instanceof CombatRoom) {
+                if (!((CombatRoom) currentRoom).getEnemies().isEmpty()) {
                     Scanner scanner = new Scanner(System.in);
                     boolean validInput = false;
 
@@ -68,7 +75,7 @@ public class Player implements LivingCreature {
                         String input = scanner.nextLine();
 
                         if (input.equalsIgnoreCase("yes")) {
-                            new Battle().startBattle(this, currentRoom);
+                            new Battle().startBattle(this,(CombatRoom) currentRoom);
                             validInput = true;
                         } else if (input.equalsIgnoreCase("no")) {
                             setCurrentRoom(prevRoom);
@@ -79,6 +86,7 @@ public class Player implements LivingCreature {
                         }
                     }
                 }
+            }
         } else {
             System.out.println("You can't go that way!");
         }

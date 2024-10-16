@@ -15,8 +15,13 @@ public class GoblinEnemy implements LivingCreature {
     }
 
     @Override
+    public int getAttackDamage() {
+        return attackDamage;
+    }
+
+    @Override
     public String getName() {
-        return "A goblin called " + name;
+        return "A Goblin called " + name;
     }
 
     @Override

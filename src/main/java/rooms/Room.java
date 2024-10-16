@@ -9,7 +9,7 @@ import java.util.Map;
 public class Room {
     private String name;
     private String description;
-    private List<LivingCreature> enemies;
+    List<LivingCreature> enemies;
     private Map<String, Room> exits;
 
     public Room(String name, String description, List<LivingCreature> enemies) {
@@ -37,25 +37,5 @@ public class Room {
 
     public String getDescription() {
         return description;
-    }
-
-    public List<LivingCreature> getEnemies() {
-        return enemies;
-    }
-
-    public void removeEnemy(LivingCreature enemy) {
-        enemies.remove(enemy);
-    }
-
-    public void clearEnemies() {
-        enemies.clear();
-    }
-
-    public Map<String, Room> getExits() {
-        return exits;
-    }
-
-    public boolean hasExit(String direction) {
-        return exits.containsKey(direction);
     }
 }
