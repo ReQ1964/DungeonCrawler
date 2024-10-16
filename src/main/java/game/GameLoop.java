@@ -13,7 +13,6 @@ public class GameLoop implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Welcome to the GAME!");
         while (running) {
             try {
                 checkGameOver();
@@ -39,8 +38,12 @@ public class GameLoop implements Runnable {
 
     public void move() throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a direction (east/west) to move: ");
+        System.out.print("Enter a direction (north/east/south/west) to move or (map) for the map: ");
         String input = scanner.nextLine();
-        player.move(input);
+        if(input.equalsIgnoreCase("map")){
+            player.printAllExits(player.getCurrentRoom());
+        }else{
+            player.move(input);
+        }
     }
 }

@@ -2,11 +2,11 @@ package game;
 
 import entities.LivingCreature;
 import entities.Player;
-import rooms.CombatRoom;
+import rooms.Room;
 
 public class Battle {
-    public void startBattle(Player player, CombatRoom combatRoom) throws InterruptedException {
-        LivingCreature enemy = combatRoom.getEnemies().get(0);
+    public void startBattle(Player player, Room room) throws InterruptedException {
+        LivingCreature enemy = room.getEnemies().get(0);
 
         while (player.isAlive() && enemy.isAlive()) {
             player.attack(enemy);
@@ -22,7 +22,7 @@ public class Battle {
 
         if (!enemy.isAlive()) {
             System.out.println(player.getName() + " is the winner!");
-            combatRoom.removeEnemy(enemy);
+            room.removeEnemy(enemy);
         } else {
             System.out.println(enemy.getName() + " is the winner!");
         }

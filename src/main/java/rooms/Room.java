@@ -27,6 +27,10 @@ public class Room {
         return exits.get(direction);
     }
 
+    public Map<String, Room> getAllExits(){
+        return exits;
+    }
+
     public String getName() {
         return name;
     }
@@ -39,7 +43,19 @@ public class Room {
         return enemies;
     }
 
+    public void removeEnemy(LivingCreature enemy) {
+        enemies.remove(enemy);
+    }
+
+    public void clearEnemies() {
+        enemies.clear();
+    }
+
     public Map<String, Room> getExits() {
         return exits;
+    }
+
+    public boolean hasExit(String direction) {
+        return exits.containsKey(direction);
     }
 }

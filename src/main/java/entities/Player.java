@@ -1,7 +1,6 @@
 package entities;
 
 import game.Battle;
-import rooms.CombatRoom;
 import rooms.Room;
 
 import java.util.Scanner;
@@ -45,6 +44,9 @@ public class Player implements LivingCreature {
 
     public void setCurrentRoom(Room room) {
         this.currentRoom = room;
+
+        System.out.println("You are in: " + currentRoom.getName());
+        System.out.println("Description: " + currentRoom.getDescription());
     }
 
     public Room getCurrentRoom() {
@@ -55,25 +57,38 @@ public class Player implements LivingCreature {
         Room newRoom = currentRoom.getExit(direction);
         Room prevRoom = currentRoom;
         if (newRoom != null) {
-            currentRoom = newRoom;
-            System.out.println("You moved to: " + currentRoom.getName());
-            System.out.println("Description: " + currentRoom.getDescription());
+            setCurrentRoom(newRoom);
 
-            if (newRoom instanceof CombatRoom combatRoom) {
-                if (!combatRoom.getEnemies().isEmpty()) {
+                if (!currentRoom.getEnemies().isEmpty()) {
                     Scanner scanner = new Scanner(System.in);
-                    System.out.println("You have encountered enemies! Do you want to fight them? (yes/no)");
-                    String input = scanner.nextLine();
-                    if (input.equalsIgnoreCase("yes")) {
-                        new Battle().startBattle(this, combatRoom);
-                    }else {
-                        currentRoom = prevRoom;
-                        System.out.println("You have fled to: " + prevRoom.getName());
+                    boolean validInput = false;
+
+                    while (!validInput) {
+                        System.out.println("You have encountered enemies! Do you want to fight them? (yes/no)");
+                        String input = scanner.nextLine();
+
+                        if (input.equalsIgnoreCase("yes")) {
+                            new Battle().startBattle(this, currentRoom);
+                            validInput = true;
+                        } else if (input.equalsIgnoreCase("no")) {
+                            setCurrentRoom(prevRoom);
+                            System.out.println("You have fled!");
+                            validInput = true;
+                        } else {
+                            System.out.println("Invalid input! Please type 'yes' or 'no'.");
+                        }
                     }
                 }
-            }
         } else {
             System.out.println("You can't go that way!");
         }
+    }
+
+    public void printAllExits(Room currentRoom){
+        System.out.print("You can still go in these directions: ");
+        for (var entry : currentRoom.getAllExits().entrySet()) {
+            System.out.print(entry.getKey()+ ", ");
+        }
+        System.out.println();
     }
 }
