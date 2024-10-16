@@ -1,25 +1,29 @@
 package entities;
 
 import game.Battle;
+import game.Inventory;
 import rooms.CombatRoom;
 import rooms.Room;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Player implements LivingCreature {
     private static Player instance; // Singleton instance
     private final String name;
+    public Inventory inventory;
     private int health;
     private int attackDamage;
     private final double critChance = 0.5;
-    public static boolean isDmgCritical;
+    public boolean isDmgCritical;
     private Room currentRoom;
 
     private Player(String name, int health, int attackDamage) {
         this.name = name;
         this.health = health;
         this.attackDamage = attackDamage;
+        this.inventory = Inventory.getInstance();
     }
 
     public static Player getInstance(String name, int health, int attackDamage) {
