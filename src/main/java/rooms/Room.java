@@ -10,11 +10,15 @@ public class Room {
     private String name;
     private String description;
     private Map<String, Room> exits;
+    private int x;
+    private int y;
 
-    public Room(String name, String description) {
+    public Room(String name, String description, int x, int y) {
         this.name = name;
         this.description = description;
         this.exits = new HashMap<>();
+        this.x = x;
+        this.y = y;
     }
 
     public void setExit(String direction, Room room) {
@@ -35,5 +39,13 @@ public class Room {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

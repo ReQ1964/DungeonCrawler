@@ -2,7 +2,6 @@ package game;
 
 import items.Item;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +21,11 @@ public class Inventory {
     }
 
     public Map<String, Item> getAllItems() {
+        if(items.isEmpty()){
+            System.out.println("You don't have any items!");
+            return null;
+        }
+
         return items;
     }
 

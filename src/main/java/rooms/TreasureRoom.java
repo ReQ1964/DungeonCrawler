@@ -7,8 +7,8 @@ import java.util.List;
 
 public class TreasureRoom extends Room{
     private Item treasure;
-    public TreasureRoom(String name, String description, Item treasure) {
-        super(name, description);
+    public TreasureRoom(String name, String description, Item treasure, int x, int y) {
+        super(name, description, x, y);
         this.treasure = treasure;
     }
 

@@ -1,32 +1,14 @@
 package items;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
+import data.ItemsData;
 
 public class ItemFactory {
     static Random random = new Random();
 
-    private static final List<String> SWORD_PREFIXES = Arrays.asList(
-            "Rusty", "Sharp", "Gleaming", "Ancient", "Mythical", "Legendary", "Enchanted", "Divine"
-    );
-    private static final List<String> SWORD_TYPES = Arrays.asList(
-            "Shortsword", "Longsword", "Broadsword", "Claymore", "Rapier", "Scimitar", "Katana"
-    );
-    private static final List<String> SWORD_SUFFIXES = Arrays.asList(
-            "of Power", "of the Ancients", "of Destiny", "of the Fallen", "of Light", "of Shadows"
-    );
-    private static final List<String> SWORD_DESCRIPTIONS = Arrays.asList(
-            "A well-crafted blade with a sharp edge.",
-            "An old sword with mysterious runes etched on its blade.",
-            "A lightweight sword that gleams in the light.",
-            "A heavy sword that radiates an aura of power.",
-            "A sword with an intricate hilt and a perfectly balanced blade."
-    );
-
     public static Sword createRandomSword() {
         String name = generateRandomSwordName();
-        String description = SWORD_DESCRIPTIONS.get(random.nextInt(SWORD_DESCRIPTIONS.size()));
+        String description = ItemsData.getSwordDescriptions().get(random.nextInt(ItemsData.getSwordDescriptions().size()));
         int damage = calculateDamageBasedOnName(name);
         return new Sword(name, description, damage);
     }
@@ -36,15 +18,15 @@ public class ItemFactory {
 
         // 50% chance to add a prefix
         if (random.nextBoolean()) {
-            nameBuilder.append(SWORD_PREFIXES.get(random.nextInt(SWORD_PREFIXES.size()))).append(" ");
+            nameBuilder.append(ItemsData.getSwordPrefixes().get(random.nextInt(ItemsData.getSwordPrefixes().size()))).append(" ");
         }
 
         // Always add a sword type
-        nameBuilder.append(SWORD_TYPES.get(random.nextInt(SWORD_TYPES.size())));
+        nameBuilder.append(ItemsData.getSwordTypes().get(random.nextInt(ItemsData.getSwordTypes().size())));
 
         // 30% chance to add a suffix
         if (random.nextDouble() < 0.3) {
-            nameBuilder.append(" ").append(SWORD_SUFFIXES.get(random.nextInt(SWORD_SUFFIXES.size())));
+            nameBuilder.append(" ").append(ItemsData.getSwordSuffixes().get(random.nextInt(ItemsData.getSwordSuffixes().size())));
         }
 
         return nameBuilder.toString();
@@ -59,7 +41,7 @@ public class ItemFactory {
 
         // Bonus damage for special words
         for (String word : words) {
-            if (SWORD_PREFIXES.contains(word) || SWORD_SUFFIXES.contains(word)) {
+            if (ItemsData.getSwordPrefixes().contains(word) || ItemsData.getSwordSuffixes().contains(word)) {
                 baseDamage += 3;
             }
             if (word.equals("Legendary") || word.equals("Mythical") || word.equals("Divine")) {
@@ -73,11 +55,10 @@ public class ItemFactory {
     public static Item createRandomItem() {
        /* int itemType = random.nextInt(3);*/
         int itemType=0;
-        switch (itemType) {
-            case 0:
-                return createRandomSword(
-                );
-            default: return null;
-            }
+        return switch (itemType) {
+            case 0 -> createRandomSword(
+            );
+            default -> null;
+        };
     }
 }

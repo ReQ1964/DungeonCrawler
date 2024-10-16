@@ -2,16 +2,14 @@ package main;
 
 import entities.*;
 import game.*;
-import rooms.Room;
-import rooms.DungeonGenerator;
-
-import java.util.Map;
+import game.DungeonGenerator;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Player player = Player.getInstance("Joe", 100, 10);
 
-        DungeonGenerator.generateDungeon(3, 3 , player);
+        DungeonGenerator dungeonGenerator = DungeonGenerator.getInstance();
+        dungeonGenerator.generateDungeon(5, 5 , player);
 
 
         Thread gameLoopThread = new Thread(new GameLoop(player));

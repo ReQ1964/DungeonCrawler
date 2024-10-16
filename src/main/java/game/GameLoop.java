@@ -1,6 +1,9 @@
 package game;
 
 import entities.Player;
+import items.Item;
+
+import java.util.Map;
 import java.util.Scanner;
 
 public class GameLoop implements Runnable {
@@ -38,12 +41,22 @@ public class GameLoop implements Runnable {
 
     public void move() throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a direction (north/east/south/west) to move or (map) for the map: ");
+        System.out.print("Enter a direction (north/east/south/west) to move, (map) for a map, (inventory) for inventory ");
         String input = scanner.nextLine();
         if(input.equalsIgnoreCase("map")){
-            player.printAllExits(player.getCurrentRoom());
+            DungeonGenerator.printDungeonMap(player);
+        }else if(input.equalsIgnoreCase("inventory")){
+            Map<String, Item> items = player.inventory.getAllItems();
+            if(items != null){
+                for(var item: items.entrySet()) {
+                    System.out.println();
+                    System.out.println(item.getValue().examine());
+                }
+                System.out.println();
+            }
+
         }else{
-            player.move(input);
+                player.move(input);
+            }
         }
     }
-}

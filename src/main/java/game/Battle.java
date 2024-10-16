@@ -1,5 +1,6 @@
 package game;
 
+import data.BattleMessages;
 import entities.LivingCreature;
 import entities.Player;
 import rooms.CombatRoom;

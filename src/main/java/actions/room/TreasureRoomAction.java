@@ -19,18 +19,20 @@ public class TreasureRoomAction implements RoomAction {
         TreasureRoom treasureRoom = (TreasureRoom) room;
         Item treasure = treasureRoom.getTreasure();
 
-        if (UserInputUtil.getYesNoInput("You've found a treasure! Do you want to examine the item?")) {
-            System.out.println("You found a: " + treasure.examine());
+        if(treasure != null){
+            if (UserInputUtil.getYesNoInput("You've found a treasure! Do you want to examine the item?")) {
+                System.out.println("You found a: " + treasure.examine());
 
-            if (UserInputUtil.getYesNoInput("Do you want to keep the item?")) {
-                player.inventory.addItem(treasure.getName(), treasure);
-                System.out.println("You've added " + treasure.getName() + " to your inventory.");
-                treasureRoom.removeTreasure();
+                if (UserInputUtil.getYesNoInput("Do you want to keep the item?")) {
+                    player.inventory.addItem(treasure.getName(), treasure);
+                    System.out.println("You've added " + treasure.getName() + " to your inventory.");
+                    treasureRoom.removeTreasure();
+                } else {
+                    System.out.println("You decide to leave the treasure for now.");
+                }
             } else {
                 System.out.println("You decide to leave the treasure for now.");
             }
-        } else {
-            System.out.println("You decide to leave the treasure for now.");
         }
     }
 }
