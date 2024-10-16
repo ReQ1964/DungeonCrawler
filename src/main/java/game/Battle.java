@@ -11,8 +11,11 @@ public class Battle {
         System.out.println("A battle begins between " + player.getName() + " and the " + enemy.getName() + "!");
 
         while (player.isAlive() && enemy.isAlive()) {
+            int damageDealt = player.getAttackDamage(); // Get the damage dealt by player
+            String damageIndicatorMessage = player.isDmgCritical ? " CRITICAL DAMAGE!" : " DAMAGE!";
+
             player.attack(enemy);
-            System.out.println(player.getName() + BattleMessages.getRandomAttackMessage() + enemy.getName() + " for " + player.getAttackDamage() + " DAMAGE!");
+            System.out.println(player.getName() + BattleMessages.getRandomAttackMessage() + enemy.getName() + " for " + damageDealt + damageIndicatorMessage);
             System.out.println(enemy.getName() + BattleMessages.getRandomReceiveDamageMessage() + enemy.getHealth() + " health.");
             System.out.println();
             waitForNextTurn();

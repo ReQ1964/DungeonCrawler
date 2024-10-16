@@ -4,12 +4,15 @@ import game.Battle;
 import rooms.CombatRoom;
 import rooms.Room;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Player implements LivingCreature {
     private final String name; // Player's name
     private int health;        // Player's health
     private int attackDamage;  // Player's attack damage
+    private final double critChance = 0.5;
+    public static boolean isDmgCritical;
     private Room currentRoom;  // The room the player is currently in
 
     public Player(String name, int health, int attackDamage) {
@@ -18,9 +21,16 @@ public class Player implements LivingCreature {
         this.attackDamage = attackDamage;
     }
 
-    @Override
     public int getAttackDamage() {
-        return attackDamage;
+        Random rand = new Random();
+        isDmgCritical = rand.nextDouble() <= critChance;
+        int damage = attackDamage;
+
+        if (isDmgCritical) {
+            damage = (int) (damage * 1.5); // Calculate critical damage
+        }
+
+        return damage;
     }
 
     @Override
