@@ -1,9 +1,8 @@
 package game;
 
 import entities.Player;
-import items.Item;
 
-import java.util.Map;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class GameLoop implements Runnable {
@@ -39,24 +38,49 @@ public class GameLoop implements Runnable {
         }
     }
 
-    public void move() throws InterruptedException {
+    public void move() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a direction (north/east/south/west) to move, (map) for a map, (inventory) for inventory ");
-        String input = scanner.nextLine();
-        if(input.equalsIgnoreCase("map")){
-            DungeonGenerator.printDungeonMap(player);
-        }else if(input.equalsIgnoreCase("inventory")){
-            Map<String, Item> items = player.inventory.getAllItems();
-            if(items != null){
-                for(var item: items.entrySet()) {
-                    System.out.println();
-                    System.out.println(item.getValue().examine());
+
+        System.out.println("Type: (WASD) to move, (M) map, (I) inventory, (C) stats");
+        String input = scanner.next();
+
+        if (input.length() > 1) {
+            System.out.println("Wrong command!");
+            return;
+        }
+
+        char key = Character.toLowerCase(input.charAt(0));
+
+        switch (key) {
+            case 'w':
+                player.move("north");
+                break;
+            case 's':
+                player.move("south");
+                break;
+            case 'd':
+                player.move("east");
+                break;
+            case 'a':
+                player.move("west");
+                break;
+            case 'm':
+                DungeonGenerator.printDungeonMap(player);
+                break;
+            case 'i':
+                player.inventory.printAllItems();
+                break;
+            case 'c':
+                HashMap<String, String> stats = player.getAllStatistics();
+                System.out.println("\nPlayer Statistics:");
+                for (var entry : stats.entrySet()) {
+                    System.out.println(entry.getKey() + ": " + entry.getValue());
                 }
                 System.out.println();
-            }
-
-        }else{
-                player.move(input);
-            }
+                break;
+            default:
+                System.out.println("Invalid command! Please use (WASD), (M), (I), or (C).");
+                break;
         }
     }
+}

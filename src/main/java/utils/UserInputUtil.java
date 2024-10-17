@@ -14,7 +14,7 @@ public class UserInputUtil {
             } else if (input.equals("no")) {
                 return false;
             } else {
-                System.out.println("Invalid input! Please type 'yes' or 'no'.");
+                System.out.println("\nInvalid input! Please type 'yes' or 'no'.\n");
             }
         }
     }

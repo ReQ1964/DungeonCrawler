@@ -126,6 +126,7 @@ public class DungeonGenerator {
         int playerX = player.getCurrentRoom().getX();
         int playerY = player.getCurrentRoom().getY();
 
+        System.out.println();
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid[x].length; y++) {
                 if (x == playerY && y == playerX) {
@@ -136,8 +137,9 @@ public class DungeonGenerator {
                     System.out.print("[ ] ");
                 }
             }
-            System.out.println();  // Move to the next row of the grid
+            System.out.println();
         }
+        System.out.println();
     }
 
 }

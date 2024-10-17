@@ -22,11 +22,23 @@ public class Inventory {
 
     public Map<String, Item> getAllItems() {
         if(items.isEmpty()){
+            System.out.println();
             System.out.println("You don't have any items!");
-            return null;
+            return new HashMap<>();
         }
 
         return items;
+    }
+
+    public void printAllItems() {
+        Map<String, Item> items = this.getAllItems();
+        if (items != null) {
+            for (var item : items.entrySet()) {
+                System.out.println();
+                System.out.println(item.getValue().examine());
+            }
+            System.out.println();
+        }
     }
 
     public Item getItem(String key){

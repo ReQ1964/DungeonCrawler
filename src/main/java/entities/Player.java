@@ -6,6 +6,7 @@ import game.DungeonGenerator;
 import rooms.Room;
 import actions.room.RoomActionFactory;
 
+import java.util.LinkedHashMap;
 import java.util.Random;
 
 public class Player implements LivingCreature {
@@ -31,6 +32,15 @@ public class Player implements LivingCreature {
             instance = new Player(name, health, attackDamage);
         }
         return instance;
+    }
+
+    public LinkedHashMap<String, String> getAllStatistics() {
+        LinkedHashMap<String, String> stats = new LinkedHashMap<>();
+        stats.put("Name", this.name);
+        stats.put("Health", Integer.toString(this.getHealth()));
+        stats.put("Attack Damage", Integer.toString(this.getAttackDamage()));
+        stats.put("Critical Chance", Double.toString(this.critChance * 100) + "%");
+        return stats;
     }
 
     public int getAttackDamage() {
@@ -96,7 +106,7 @@ public class Player implements LivingCreature {
         if (newRoom != null) {
             setCurrentRoom(newRoom);
         } else {
-            System.out.println("You can't go that way!");
+            System.out.println("You can't go that way!\n");
         }
     }
 }

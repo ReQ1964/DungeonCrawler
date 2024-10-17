@@ -10,7 +10,7 @@ public class CombatRoomAction implements RoomAction {
     @Override
     public void perform(Player player, Room room) throws InterruptedException {
             if (!((CombatRoom) room).getEnemies().isEmpty()) {
-                if (UserInputUtil.getYesNoInput("You have encountered an enemy! Do you want to fight them?")) {
+                if (UserInputUtil.getYesNoInput("You have encountered an enemy! Do you want to fight him?")) {
                     new Battle().startBattle(player, (CombatRoom) room);
                 } else {
                     player.setCurrentRoom(player.getPreviousRoom());

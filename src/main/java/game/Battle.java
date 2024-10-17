@@ -9,7 +9,7 @@ public class Battle {
     public void startBattle(Player player, CombatRoom combatRoom) throws InterruptedException {
         LivingCreature enemy = combatRoom.getEnemies().getFirst();
 
-        System.out.println("A battle begins between " + player.getName() + " and the " + enemy.getName() + "!");
+        System.out.println("A battle begins between " + player.getName() + " and the " + enemy.getName() + "!\n");
 
         while (player.isAlive() && enemy.isAlive()) {
             player.attack(enemy);
@@ -38,6 +38,7 @@ public class Battle {
             System.out.println(enemy.getName() + " lets out a triumphant roar, having bested " + player.getName() + " in combat!");
             System.out.println(player.getName() + " falls, but their spirit will live on in the hearts of their allies.");
         }
+        System.out.println();
     }
 
     private void waitForNextTurn() throws InterruptedException {
